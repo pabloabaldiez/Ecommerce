@@ -19,7 +19,7 @@ public class ProductoServiceImpl implements ProductoService {
     }
 
     @Override
-    public Optional<Producto> get(Integer id) {
+    public Optional<Producto> getProducto(Integer id) {
         return productoRespository.findById(id);
     }
 
