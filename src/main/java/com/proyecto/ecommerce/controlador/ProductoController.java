@@ -1,5 +1,6 @@
 package com.proyecto.ecommerce.controlador;
 
+import org.springframework.ui.Model;
 import com.proyecto.ecommerce.modelo.Producto;
 import com.proyecto.ecommerce.modelo.Usuario;
 import com.proyecto.ecommerce.servicio.ProductoService;
@@ -20,7 +21,9 @@ public class ProductoController {
     private ProductoService productoService;
 
     @GetMapping("")
-    public String show(){
+    public String show(Model model){
+       model.addAttribute("productos", productoService.listaProductos());
+
         return"/productos/show";
     }
 
@@ -39,6 +42,5 @@ public class ProductoController {
 
         return "redirect:/productos";
     }
-
 
 }
