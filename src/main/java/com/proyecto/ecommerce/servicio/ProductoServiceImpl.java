@@ -2,12 +2,14 @@ package com.proyecto.ecommerce.servicio;
 
 import com.proyecto.ecommerce.modelo.Producto;
 import com.proyecto.ecommerce.repositorio.ProductoRespository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
 public class ProductoServiceImpl implements ProductoService {
+    @Autowired
     ProductoRespository productoRespository;
 
     @Override

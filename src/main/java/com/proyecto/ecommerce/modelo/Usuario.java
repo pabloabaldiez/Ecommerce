@@ -27,10 +27,23 @@ public class Usuario {
     private String rol;
     private String password;
 
+
+    public Usuario(Integer id, String nombre, String username, String email, String direccion, String telefono, String rol, String password) {
+        this.id = id;
+        this.nombre = nombre;
+        this.username = username;
+        this.email = email;
+        this.direccion = direccion;
+        this.telefono = telefono;
+        this.rol = rol;
+        this.password = password;
+    }
+
     @OneToMany(mappedBy = "usuario") //Se mapea con el atributo usuario de la clase Producto
     private List<Producto> productos;
 
     @OneToMany(mappedBy = "usuario") //Se mapea con el atributo usuario de la clase Orden
     private List<Orden> ordenes;
+
 
 }
