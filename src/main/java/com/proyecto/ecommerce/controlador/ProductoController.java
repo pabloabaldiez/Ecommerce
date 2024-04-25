@@ -28,9 +28,9 @@ public class ProductoController {
 
     @GetMapping("")
     public String show(Model model){
-       model.addAttribute("productos", productoService.listaProductos());
+       model.addAttribute("productos", productoService.findAll());
 
-        return"/productos/show";
+       return"/productos/show";
     }
 
     @GetMapping("/create")
@@ -71,20 +71,21 @@ public class ProductoController {
     @PostMapping("/update")
     public String update(Producto producto, @RequestParam("img") MultipartFile imagen) throws IOException {
 
+        Producto p=new Producto();
+        p=productoService.getProducto(producto.getId()).get();
+
         if(imagen.isEmpty()){ //cuando editamos el producto pero no cambiamos la imagen
-            Producto p=new Producto();
-            p=productoService.getProducto(producto.getId()).get();
+
             producto.setImagen(p.getImagen());
         }else{
-            Producto p =new Producto();
-            p=productoService.getProducto(producto.getId()).get();
-
             //Eliminar cuando no sea la imagen por defecto
             if(!p.getImagen().equals("default.jpg")) {
                 uploadImage.deleteImage(p.getImagen());
             }
             String nombreImagen= uploadImage.saveImage(imagen);
+            producto.setUsuario(p.getUsuario());
             producto.setImagen(nombreImagen);
+
         }
 
 

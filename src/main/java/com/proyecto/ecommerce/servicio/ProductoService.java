@@ -11,6 +11,6 @@ public interface ProductoService {
     public Optional<Producto> getProducto(Integer id);
     public void update(Producto producto);
     public void delete(Integer id);
-    public List<Producto> listaProductos();
+    public List<Producto> findAll();
 
 }
