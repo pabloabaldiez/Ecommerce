@@ -55,7 +55,6 @@ public class ProductoController {
         return "redirect:/productos";
     }
 
-
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Integer id, Model model){
 
@@ -75,7 +74,6 @@ public class ProductoController {
         p=productoService.getProducto(producto.getId()).get();
 
         if(imagen.isEmpty()){ //cuando editamos el producto pero no cambiamos la imagen
-
             producto.setImagen(p.getImagen());
         }else{
             //Eliminar cuando no sea la imagen por defecto
