@@ -12,10 +12,10 @@
 
 
   <!-- Bootstrap core CSS -->
-  <link th:href="@{vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+  <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
 
   <!-- Custom styles for this template -->
-  <link th:href="@{css/heroic-features.css}" rel="stylesheet">
+  <link th:href="@{/css/heroic-features.css}" rel="stylesheet">
 
 </head>
 
@@ -23,7 +23,7 @@
 
   <!-- Navigation -->
 
-  <div th:include="usuario/template_usuario.html::header"></div>
+  <div th:include="/usuario/template_usuario.html::header"></div>
 
     <!-- Page Content -->
     <div class="container">
@@ -54,13 +54,13 @@
                   <th scope="col">Acción</th>
                 </tr>
               </thead>
-              <tbody th:each="orden:${carrito}">
-                <tr>
-                  <td th:text="${orden.nombre}"></td>
-                  <td th:text="${orden.precio}"></td>
-                  <td th:text="${orden.cantidad}"></td>
-                  <td th:text="${orden.total}"></td>
-                  <td><a href="#" class="btn btn-danger">Quitar</a></td>
+              <tbody>
+                <tr th:each="dorden:${carrito}">
+                  <td th:text="${dorden.nombre}"></td>
+                  <td th:text="${dorden.precio}"></td>
+                  <td th:text="${dorden.cantidad}"></td>
+                  <td th:text="${dorden.total}"></td>
+                  <td><a th:href="@{/eliminaorden/carrito/{id} (id=${dorden.producto.id})}" class="btn btn-danger">Quitar</a></td>
                 </tr>
               </tbody>
             </table>
@@ -78,10 +78,11 @@
         </div>
       </div>
     </div>
-    <!-- /.container -->
     </div>
+    <!-- /.container -->
+
       <!-- Footer -->
-      <div th:include="usuario/template_usuario.html::footer"></div>
+      <div th:include="/usuario/template_usuario.html::footer"></div>
 
       <!-- Bootstrap core JavaScript -->
       <script th:src="@{/vendor/jquery/jquery.min.js}"></script>

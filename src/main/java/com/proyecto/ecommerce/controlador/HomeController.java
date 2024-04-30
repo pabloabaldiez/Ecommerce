@@ -58,11 +58,7 @@ public class HomeController {
         DetalleOrden detalleOrden= new DetalleOrden();
         Producto producto=new Producto();
         double sumaTotal=0;
-
         Optional<Producto> optionalProducto=productoService.getProducto(id);
-
-        //LOOGER.info("Producto añadido: {}", optionalProducto.get());
-        //LOOGER.info("Cantidad: {}", cantidad);
 
         producto=optionalProducto.get();
 
@@ -78,12 +74,52 @@ public class HomeController {
 
         orden.setTotal(sumaTotal);
 
-        detalles.add(detalleOrden);
+
+        //Validar que el producto no se añada dos veces
+
+        Integer idProducto= producto.getId();
+        boolean ingresado=detalles.stream().anyMatch(p-> p.getProducto().getId()==idProducto);
+
+        if(!ingresado){
+            detalles.add(detalleOrden);
+        }
 
         model.addAttribute("carrito", detalles);
         model.addAttribute("orden", orden);
 
         return"usuario/carrito";
     }
+
+    @GetMapping("/eliminaorden/carrito/{id}")
+    public String eliminaProductoCarrito(@PathVariable Integer id, Model model){
+
+        List<DetalleOrden> ordenesNueva=new ArrayList<DetalleOrden>();
+
+        //Si no coincide el id el item formara parte de la nueva lista sin el el eliminado
+        for(DetalleOrden detalleOrden : detalles) {
+            if (detalleOrden.getProducto().getId() != id) {
+                ordenesNueva.add(detalleOrden);
+            }
+        }
+
+
+        detalles=ordenesNueva;//Pone la lista con los productos restantes
+
+        double sumaTotal=0;
+
+        sumaTotal=detalles.stream()
+                .mapToDouble(DetalleOrden::getTotal)
+                .sum();
+
+        orden.setTotal(sumaTotal);
+        model.addAttribute("carrito", detalles);
+        model.addAttribute("orden", orden);
+
+
+
+        return "usuario/carrito";
+
+    }
+
 
 }
