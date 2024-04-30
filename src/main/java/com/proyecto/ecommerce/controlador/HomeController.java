@@ -37,12 +37,7 @@ public class HomeController {
     @GetMapping("")
     public String home(Model model) {
 
-
-
         model.addAttribute("productos", productoService.findAll());
-
-        //session
-
 
         return "usuario/home";
     }
@@ -116,6 +111,14 @@ public class HomeController {
         model.addAttribute("cart", detalles);
         model.addAttribute("orden", orden);
 
+        return "usuario/carrito";
+    }
+
+    @GetMapping("/getCarrito")
+    public String getCarrito(Model model){
+
+        model.addAttribute("cart", detalles);
+        model.addAttribute("orden", orden);
         return "usuario/carrito";
     }
 
