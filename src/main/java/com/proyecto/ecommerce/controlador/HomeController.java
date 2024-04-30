@@ -27,7 +27,6 @@ public class HomeController {
     private ProductoService productoService;
 
 
-
     // para almacenar los detalles de la orden
     List<DetalleOrden> detalles = new ArrayList<DetalleOrden>();
 
@@ -72,8 +71,8 @@ public class HomeController {
         detalleOrden.setProducto(producto);
 
         //validar que le producto no se añada 2 veces
-        Integer idProducto=producto.getId();
-        boolean ingresado=detalles.stream().anyMatch(p -> p.getProducto().getId()==idProducto);
+        Integer idProducto = producto.getId();
+        boolean ingresado = detalles.stream().anyMatch(p -> p.getProducto().getId() == idProducto);
 
         if (!ingresado) {
             detalles.add(detalleOrden);
@@ -115,11 +114,19 @@ public class HomeController {
     }
 
     @GetMapping("/getCarrito")
-    public String getCarrito(Model model){
+    public String getCarrito(Model model) {
 
         model.addAttribute("cart", detalles);
         model.addAttribute("orden", orden);
         return "usuario/carrito";
     }
 
+    @GetMapping("/order")
+    public String order() {
+        return "usuario/resumenorden";
+    }
+
+
 }
+
+
