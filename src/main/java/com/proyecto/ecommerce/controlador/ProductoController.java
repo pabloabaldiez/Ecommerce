@@ -4,7 +4,7 @@ import com.proyecto.ecommerce.servicio.UploadFileService;
 import org.springframework.ui.Model;
 import com.proyecto.ecommerce.modelo.Producto;
 import com.proyecto.ecommerce.modelo.Usuario;
-import com.proyecto.ecommerce.servicio.ProductoService;
+import com.proyecto.ecommerce.servicio.producto.ProductoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.proyecto.ecommerce.servicio;
+package com.proyecto.ecommerce.servicio.producto;
 
 import com.proyecto.ecommerce.modelo.Producto;
 
