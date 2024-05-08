@@ -165,7 +165,7 @@ public class HomeController {
             dt.setOrden(orden);
             detalleOrdenService.save(dt);
         }
-        //limpiar valores lista y orden
+        //limpiar valores lista y orde
         orden=new Orden();
         detalles.clear();
 
@@ -183,7 +183,6 @@ public class HomeController {
                 .toList();
 
         model.addAttribute("productos", productos);
-
         return"usuario/home";
     }
 }
