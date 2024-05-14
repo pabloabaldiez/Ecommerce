@@ -55,7 +55,7 @@
       <a class="navbar-brand" th:href="@{/}">Spring eCommerce</a>
 
       <form class="form-inline my-2 my-lg-0" method="post"
-            action="@{/search}">
+            th:action="@{/search}">
         <input class="form-control mr-sm-2" type="search"
                placeholder="Buscar" aria-label="Search" name="nombre"
                autocomplete="off">
@@ -76,6 +76,7 @@
                  aria-labelledby="navbarDropdownMenuLink">
               <a class="dropdown-item" th:href="@{/usuario/compras}">Compras</a>
               <a class="dropdown-item" th:href="@{/getCarrito}">Carrito</a>
+              <a class="dropdown-item" th:href="@{/usuario/cerrar}">Cerrar sesion</a>
             </div></li>
         </ul>
       </div>

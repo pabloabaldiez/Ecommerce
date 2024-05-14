@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OrdenServicioImpl implements OrdenService{
@@ -58,6 +59,11 @@ public class OrdenServicioImpl implements OrdenService{
     @Override
     public List<Orden> findByUsuario(Usuario usuario) {
         return ordenRepository.findByUsuario(usuario);
+    }
+
+    @Override
+    public Optional<Orden> findById(Integer id) {
+        return ordenRepository.findById(id);
     }
 
 }

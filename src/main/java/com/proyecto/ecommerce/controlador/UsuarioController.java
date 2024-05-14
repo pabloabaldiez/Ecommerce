@@ -1,5 +1,6 @@
 package com.proyecto.ecommerce.controlador;
 
+import com.proyecto.ecommerce.modelo.DetalleOrden;
 import com.proyecto.ecommerce.modelo.Orden;
 import com.proyecto.ecommerce.modelo.Usuario;
 import com.proyecto.ecommerce.servicio.orden.OrdenService;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -78,11 +80,35 @@ public class UsuarioController {
 
         Usuario usuario=usuarioService.findById(Integer.parseInt(session.getAttribute("idusuario").toString())).get();
 
-        List<Orden> compras=ordenService.findByUsuario(usuario);
+        List<Orden> orden=ordenService.findByUsuario(usuario);
 
-        model.addAttribute("compras", compras);
+        model.addAttribute("ordenes", orden);
 
         return "usuario/compras";
+    }
+
+    @GetMapping("/detalle/{id}")
+    public String getDetalleCompra(@PathVariable Integer id, HttpSession session, Model model){
+
+        logger.info("Id de la orden: {} ", id);
+
+        Optional<Orden> orden=ordenService.findById(id);
+
+        logger.info("la lista es: {}", orden.isPresent());
+
+        model.addAttribute("detalles", orden.get().getDetalle());
+
+        model.addAttribute("sesion", session.getAttribute("idusuario"));
+
+        return"usuario/detallecompra";
+    }
+
+    @GetMapping("/cerrar")
+    public String cierreSesion(HttpSession session){
+
+        session.removeAttribute("idusuario");
+
+        return "redirect:/";
     }
 
 }
