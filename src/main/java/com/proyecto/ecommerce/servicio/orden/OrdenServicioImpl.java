@@ -1,6 +1,7 @@
 package com.proyecto.ecommerce.servicio.orden;
 
 import com.proyecto.ecommerce.modelo.Orden;
+import com.proyecto.ecommerce.modelo.Usuario;
 import com.proyecto.ecommerce.repositorio.OrdenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,6 +54,10 @@ public class OrdenServicioImpl implements OrdenService{
     }
 
         return numeroString;
+    }
+    @Override
+    public List<Orden> findByUsuario(Usuario usuario) {
+        return ordenRepository.findByUsuario(usuario);
     }
 
 }
