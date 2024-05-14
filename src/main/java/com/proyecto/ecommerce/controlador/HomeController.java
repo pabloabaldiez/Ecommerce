@@ -183,14 +183,14 @@ public class HomeController {
     }
 
     @PostMapping("/search")
-    public String searchProduct(@RequestParam String productoBuscado, Model model){
-        log.info("Nombre del producto {}", productoBuscado);
+    public String searchProduct(@RequestParam String nombre, Model model){
+       // log.info("Nombre del producto {}", nombre);
 
         List<Producto> productos=productoService.findAll()
                 .stream()
                 .filter(p -> p.getNombre()
-                        .contains(productoBuscado))
-                .toList();
+                        .contains(nombre))
+                        .collect(Collectors.toList());
 
         model.addAttribute("productos", productos);
         return"usuario/home";
