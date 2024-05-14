@@ -47,13 +47,13 @@ public class UsuarioController {
     public String Autenticacion(Usuario usuario, HttpSession session){
         logger.info("Autenticacion : {}", usuario);
 
-        Optional<Usuario> usuarioLogeo=usuarioService.findByEmail(usuario.getEmail());
+        Optional<Usuario> usuarioLogeado=usuarioService.findByEmail(usuario.getEmail());
 
-        logger.info("Usuario obtenido : {}", usuarioLogeo.get());
+       // logger.info("Usuario obtenido : {}", usuarioLogeo.get());
 
-        if(usuarioLogeo.isPresent()) {
-            session.setAttribute("idusuario", usuarioLogeo.get().getId());
-            if (usuarioLogeo.get().getRol().equals("ADMIN")){
+        if(usuarioLogeado.isPresent()) {
+            session.setAttribute("idusuario", usuarioLogeado.get().getId());
+            if (usuarioLogeado.get().getRol().equals("ADMIN")){
                 return "redirect:/administrador";
             }else{
                 return "redirect:/";}

@@ -8,6 +8,7 @@ import com.proyecto.ecommerce.servicio.detalleorden.DetalleOrdenService;
 import com.proyecto.ecommerce.servicio.orden.OrdenService;
 import com.proyecto.ecommerce.servicio.producto.ProductoService;
 import com.proyecto.ecommerce.servicio.usuario.UsuarioService;
+import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,9 +46,15 @@ public class HomeController {
     Orden orden = new Orden();
 
     @GetMapping("")
-    public String home(Model model) {
+    public String home(Model model, HttpSession session) {
+
+        log.info("Session del usuario con id: {}", session.getAttribute("idusuario"));
 
         model.addAttribute("productos", productoService.findAll());
+
+        //Determino que header le mando al usuario segun este logueado o no
+        //enviando el atributo del id del usuario en sesion
+        model.addAttribute("sesion", session.getAttribute("idusuario"));
 
         return "usuario/home";
     }
@@ -125,18 +132,21 @@ public class HomeController {
     }
 
     @GetMapping("/getCarrito")
-    public String getCarrito(Model model) {
+    public String getCarrito(Model model, HttpSession session) {
 
         model.addAttribute("cart", detalles);
         model.addAttribute("orden", orden);
+
+        //sesion
+        model.addAttribute("sesion", session.getAttribute("idusuario"));
+
         return "usuario/carrito";
     }
 
     @GetMapping("/order")
-    public String order(Model model){
+    public String order(Model model, HttpSession session){
 
-        Usuario usuario=usuarioService.findById(1).get();
-
+        Usuario usuario=usuarioService.findById(Integer.parseInt(session.getAttribute("idusuario").toString())).get();
 
         model.addAttribute("usuario", usuario);
         model.addAttribute("cart", detalles);
@@ -146,7 +156,7 @@ public class HomeController {
     }
 
     @GetMapping("/saveOrder")
-    public String saveOrder(){
+    public String saveOrder(HttpSession session){
 
         Date fechaCreacion = new Date();
 
@@ -155,7 +165,7 @@ public class HomeController {
 
         //usuario de esta orden.
 
-        Usuario usuario=usuarioService.findById(1).get();
+        Usuario usuario=usuarioService.findById(Integer.parseInt(session.getAttribute("idusuario").toString())).get();
 
         orden.setUsuario(usuario);
         ordenService.save(orden);
@@ -169,7 +179,7 @@ public class HomeController {
         orden=new Orden();
         detalles.clear();
 
-        return"redirect:/";
+        return "redirect:/";
     }
 
     @PostMapping("/search")

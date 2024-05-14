@@ -1,6 +1,8 @@
 package com.proyecto.ecommerce.controlador;
 
 import com.proyecto.ecommerce.servicio.UploadFileService;
+import com.proyecto.ecommerce.servicio.usuario.UsuarioService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.ui.Model;
 import com.proyecto.ecommerce.modelo.Producto;
 import com.proyecto.ecommerce.modelo.Usuario;
@@ -26,6 +28,9 @@ public class ProductoController {
     @Autowired
     private UploadFileService uploadImage;
 
+    @Autowired
+    private UsuarioService usuarioService;
+
     @GetMapping("")
     public String show(Model model){
        model.addAttribute("productos", productoService.findAll());
@@ -39,11 +44,11 @@ public class ProductoController {
     }
 
     @PostMapping("/save")
-    public  String save(Producto producto, @RequestParam("img") MultipartFile imagen) throws IOException {
+    public  String save(Producto producto, @RequestParam("img") MultipartFile imagen, HttpSession session) throws IOException {
        // LOGGER.info("Este es el objeto producto {}",producto);
 
-        Usuario u =new Usuario(1,"","","","","","","");
-        producto.setUsuario(u);
+        Usuario usuario= usuarioService.findById(Integer.parseInt(session.getAttribute("idusuario").toString())).get();
+        producto.setUsuario(usuario);
 
         if(producto.getId()==null){ //antes del save() un producto viene con el id null
             String nombreImagen= uploadImage.saveImage(imagen);
